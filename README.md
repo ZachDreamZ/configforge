@@ -19,7 +19,18 @@
 
 ---
 
-**ConfigForge** merges config from multiple sources — JSON files, environment variables, default values, and encrypted secrets — into a single validated dictionary. Nested dicts merge deeply. Scalar conflicts raise hard errors by default instead of silently clobbering. Schemas enforce types, required fields, and bounds at resolve time.
+```
+❯ configforge — layered application configuration
+
+  Merges config from multiple sources — JSON files, environment
+  variables, default values, and encrypted secrets — into a single
+  validated dictionary. Nested dicts merge deeply. Scalar conflicts
+  raise hard errors. Schemas enforce types at resolve time.
+
+  ✓ zero core dependencies
+  ✓ encrypted secrets (Fernet envelope)
+  ✓ Python 3.9+ · Windows / Linux / macOS
+```
 
 ```python
 from configforge import forge, Layer
