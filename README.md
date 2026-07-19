@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ZachDreamZ/configforge/actions/workflows/ci.yml"><img src="https://github.com/ZachDreamZ/configforge/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://github.com/ZachDreamZ/configforge/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://github.com/ZachDreamZ/configforge/actions/workflows/ci.yml"><img src="https://github.com/ZachDreamZ/configforge/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI"></a>
+  <a href="https://github.com/ZachDreamZ/configforge/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg" alt="Python 3.9+"></a>
-  <a href="https://pypi.org/project/configforge/"><img src="https://img.shields.io/badge/pypi-0.1.0-ff69b4.svg" alt="PyPI"></a>
+  <a href="https://github.com/ZachDreamZ/configforge/releases"><img src="https://img.shields.io/badge/releases-v0.1.0-ff69b4.svg" alt="Releases"></a>
   <img src="https://img.shields.io/badge/coverage-22%20tests%20passing-brightgreen.svg" alt="Tests passing">
   <img src="https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg" alt="Platforms">
 </p>
@@ -43,9 +43,17 @@ small package:
 
 ## Install
 
+> ConfigForge is not yet on PyPI. Install from source (works today, zero surprises):
+
 ```bash
-pip install configforge            # core only (no deps)
-pip install "configforge[secrets]" # + encrypted secrets support
+git clone https://github.com/ZachDreamZ/configforge.git
+cd configforge
+pip install -e ".[secrets]"        # core only needs no extra deps
+pip install -e ".[dev,secrets]"    # + test deps for development
+
+# Once published to PyPI you will also be able to run:
+#   pip install configforge            # core only (no deps)
+#   pip install "configforge[secrets]" # + encrypted secrets support
 ```
 
 Or build from source:

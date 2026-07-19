@@ -36,7 +36,7 @@ configforge = "configforge.cli:main"
 Homepage = "https://github.com/ZachDreamZ/configforge"
 Repository = "https://github.com/ZachDreamZ/configforge"
 Issues = "https://github.com/ZachDreamZ/configforge/issues"
-Changelog = "https://github.com/ZachDreamZ/configforge/blob/main/CHANGELOG.md"
+Changelog = "https://github.com/ZachDreamZ/configforge/blob/master/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["src"]
