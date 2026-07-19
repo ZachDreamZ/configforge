@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="360" viewBox="0 0 800 360" role="img" aria-label="ConfigForge architecture diagram">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="src1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="src2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="src3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="src4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="forge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="err" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="out" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="360" rx="16" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#e2e8f0" letter-spacing="1">ARCHITECTURE</text>
+
+  <!-- Source boxes (left side) -->
+  <g filter="url(#shadow)">
+    <!-- Layer (dict) -->
+    <rect x="30" y="60" width="150" height="44" rx="8" fill="url(#src1)" opacity="0.9"/>
+    <text x="105" y="81" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#fff">Layer (dict)</text>
+    <text x="105" y="96" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="rgba(255,255,255,0.8)">Python object / JSON</text>
+
+    <!-- Layer (JSON file) -->
+    <rect x="30" y="114" width="150" height="44" rx="8" fill="url(#src2)" opacity="0.9"/>
+    <text x="105" y="135" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#fff">Layer (JSON file)</text>
+    <text x="105" y="150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="rgba(255,255,255,0.8)">base.json / override.json</text>
+
+    <!-- Env vars -->
+    <rect x="30" y="168" width="150" height="44" rx="8" fill="url(#src3)" opacity="0.9"/>
+    <text x="105" y="189" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#fff">Env vars (APP__*)</text>
+    <text x="105" y="204" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="rgba(255,255,255,0.8)">APP__DB__HOST → DB.HOST</text>
+
+    <!-- Secrets -->
+    <rect x="30" y="222" width="150" height="44" rx="8" fill="url(#src4)" opacity="0.9"/>
+    <text x="105" y="243" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#fff">Secrets (Fernet)</text>
+    <text x="105" y="258" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="rgba(255,255,255,0.8)">Decrypted token</text>
+  </g>
+
+  <!-- Arrows from sources to forge -->
+  <line x1="180" y1="82" x2="260" y2="145" stroke="#38bdf8" stroke-width="2" opacity="0.6"/>
+  <polygon points="258,143 264,145 256,148" fill="#38bdf8" opacity="0.6"/>
+
+  <line x1="180" y1="136" x2="260" y2="148" stroke="#38bdf8" stroke-width="2" opacity="0.6"/>
+  <polygon points="258,147 264,148 256,151" fill="#38bdf8" opacity="0.6"/>
+
+  <line x1="180" y1="190" x2="260" y2="152" stroke="#38bdf8" stroke-width="2" opacity="0.6"/>
+  <polygon points="258,153 264,152 256,149" fill="#38bdf8" opacity="0.6"/>
+
+  <line x1="180" y1="244" x2="260" y2="155" stroke="#fbbf24" stroke-width="2" opacity="0.6"/>
+  <polygon points="258,156 264,155 256,152" fill="#fbbf24" opacity="0.6"/>
+
+  <!-- Forge box (center) -->
+  <g filter="url(#shadow)">
+    <rect x="260" y="110" width="160" height="90" rx="12" fill="url(#forge)" opacity="0.95"/>
+    <text x="340" y="148" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#fff">forge()</text>
+    <text x="340" y="168" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Deep merge</text>
+    <text x="340" y="183" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Conflict detection</text>
+  </g>
+
+  <!-- Arrow from forge to validate -->
+  <line x1="420" y1="155" x2="500" y2="155" stroke="#38bdf8" stroke-width="3"/>
+  <polygon points="498,150 508,155 498,160" fill="#38bdf8"/>
+
+  <!-- Schema input arrow -->
+  <line x1="340" y1="200" x2="340" y2="230" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="337,228 340,235 343,228" fill="#94a3b8"/>
+  <text x="360" y="240" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">schema</text>
+
+  <!-- Validate box -->
+  <g filter="url(#shadow)">
+    <rect x="500" y="120" width="140" height="70" rx="12" fill="#334155"/>
+    <text x="570" y="154" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">Validate</text>
+    <text x="570" y="171" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">type · required · default</text>
+    <text x="570" y="183" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">min/max · pattern</text>
+  </g>
+
+  <!-- Arrow from validate to Config -->
+  <line x1="640" y1="155" x2="700" y2="155" stroke="#22c55e" stroke-width="3"/>
+  <polygon points="698,150 708,155 698,160" fill="#22c55e"/>
+
+  <!-- Config output box -->
+  <g filter="url(#shadow)">
+    <rect x="700" y="125" width="80" height="60" rx="10" fill="url(#out)"/>
+    <text x="740" y="157" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff">Config</text>
+    <text x="740" y="175" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">dict / JSON</text>
+  </g>
+
+  <!-- Bottom error branch -->
+  <path d="M340 200 L340 285 Q340 295 350 295 L500 295 Q510 295 510 285 L510 270" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="507,272 510,265 513,272" fill="#ef4444"/>
+
+  <g filter="url(#shadow)">
+    <rect x="420" y="285" width="180" height="44" rx="8" fill="url(#err)" opacity="0.9"/>
+    <text x="510" y="306" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#fff">MergeConflictError</text>
+    <text x="510" y="321" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Scalar clash detection</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(30, 300)">
+    <text x="0" y="10" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">— Input sources →</text>
+    <rect x="120" y="0" width="12" height="12" rx="3" fill="url(#src1)"/>
+    <text x="136" y="10" font-family="system-ui, sans-serif" font-size="9" fill="#cbd5e1">Layer</text>
+    <rect x="180" y="0" width="12" height="12" rx="3" fill="url(#src4)"/>
+    <text x="196" y="10" font-family="system-ui, sans-serif" font-size="9" fill="#cbd5e1">Secrets</text>
+    <rect x="250" y="0" width="12" height="12" rx="3" fill="#334155"/>
+    <text x="266" y="10" font-family="system-ui, sans-serif" font-size="9" fill="#cbd5e1">Validate</text>
+    <rect x="320" y="0" width="12" height="12" rx="3" fill="url(#out)"/>
+    <text x="336" y="10" font-family="system-ui, sans-serif" font-size="9" fill="#cbd5e1">Config</text>
+    <rect x="386" y="0" width="12" height="12" rx="3" fill="url(#err)"/>
+    <text x="402" y="10" font-family="system-ui, sans-serif" font-size="9" fill="#cbd5e1">Error</text>
+  </g>
+</svg>
