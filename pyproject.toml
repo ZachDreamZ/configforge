@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "configforge"
+version = "0.1.0"
+description = "Layered, schema-aware configuration with encrypted secrets for 12-factor apps."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "ZachDreamZ", email = "zachdreamz@example.com" }]
+keywords = ["config", "configuration", "env", "secrets", "12-factor", "schema", "validation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Systems Administration",
+]
+dependencies = []
+
+[project.optional-dependencies]
+secrets = ["cryptography>=41.0"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+configforge = "configforge.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ZachDreamZ/configforge"
+Repository = "https://github.com/ZachDreamZ/configforge"
+Issues = "https://github.com/ZachDreamZ/configforge/issues"
+Changelog = "https://github.com/ZachDreamZ/configforge/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools.package-data]
+configforge = ["py.typed"]

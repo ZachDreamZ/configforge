@@ -1,0 +1,14 @@
+{
+  "fields": {
+    "server": {
+      "type": "dict"
+    },
+    "debug": {
+      "type": "bool"
+    },
+    "app": {
+      "type": "str",
+      "required": true
+    }
+  }
+}

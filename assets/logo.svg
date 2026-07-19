@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="ConfigForge logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="320" rx="64" fill="url(#bg)"/>
+  <!-- layered plates -->
+  <rect x="64" y="120" width="192" height="22" rx="11" fill="url(#accent)" opacity="0.45"/>
+  <rect x="80" y="156" width="160" height="22" rx="11" fill="url(#accent)" opacity="0.65"/>
+  <rect x="96" y="192" width="128" height="22" rx="11" fill="url(#accent)"/>
+  <!-- anvil / lock core -->
+  <circle cx="160" cy="96" r="34" fill="none" stroke="url(#accent)" stroke-width="8"/>
+  <path d="M146 96 h28 M160 82 v28" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <text x="160" y="288" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#e2e8f0">ConfigForge</text>
+</svg>
