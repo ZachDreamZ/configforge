@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Dogs",
+    "url": "https://dog.ceo/api/breeds/image/random",
+    "status": 200
+  },
+  {
+    "name": "Cat Facts",
+    "url": "https://catfact.ninja/fact",
+    "status": 200
+  },
+  {
+    "name": "HTTP Cat",
+    "url": "https://http.cat/200",
+    "status": 200
+  },
+  {
+    "name": "RandomDog",
+    "url": "https://random.dog/woof.json",
+    "status": 200
+  },
+  {
+    "name": "PlaceDog",
+    "url": "https://place.dog/300/200",
+    "status": 200
+  },
+  {
+    "name": "Public Holidays",
+    "url": "https://date.nager.at/api/v3/AvailableCountries",
+    "status": 200
+  },
+  {
+    "name": "REST Countries",
+    "url": "https://restcountries.com/v3.1/name/canada?fields=name,capital,population",
+    "status": 200
+  },
+  {
+    "name": "Open Notify ISS",
+    "url": "http://api.open-notify.org/iss-now.json",
+    "status": 200
+  },
+  {
+    "name": "Advice Slip",
+    "url": "https://api.adviceslip.com/advice",
+    "status": 200
+  },
+  {
+    "name": "Official Joke",
+    "url": "https://official-joke-api.appspot.com/random_joke",
+    "status": 200
+  },
+  {
+    "name": "Agify",
+    "url": "https://api.agify.io?name=ron",
+    "status": 200
+  },
+  {
+    "name": "Genderize",
+    "url": "https://api.genderize.io?name=jamie",
+    "status": 200
+  },
+  {
+    "name": "Nationalize",
+    "url": "https://api.nationalize.io?name=nathaniel",
+    "status": 200
+  },
+  {
+    "name": "JSONPlaceholder",
+    "url": "https://jsonplaceholder.typicode.com/users/1",
+    "status": 200
+  },
+  {
+    "name": "Art Institute of Chicago",
+    "url": "https://api.artic.edu/api/v1/artworks?limit=1",
+    "status": 200
+  },
+  {
+    "name": "Metropolitan Museum of Art",
+    "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/1",
+    "status": 200
+  },
+  {
+    "name": "University Domains",
+    "url": "http://universities.hipolabs.com/search?name=middle",
+    "status": 200
+  },
+  {
+    "name": "Open Library",
+    "url": "https://openlibrary.org/search.json?q=test&limit=1",
+    "status": 200
+  },
+  {
+    "name": "Rick and Morty",
+    "url": "https://rickandmortyapi.com/api/character/1",
+    "status": 200
+  },
+  {
+    "name": "PokeAPI",
+    "url": "https://pokeapi.co/api/v2/pokemon/ditto",
+    "status": 200
+  },
+  {
+    "name": "Dictionary",
+    "url": "https://api.dictionaryapi.dev/api/v2/entries/en/hello",
+    "status": 200
+  },
+  {
+    "name": "Agenda",
+    "url": "https://api.agify.io?name=will",
+    "status": 200
+  }
+]
