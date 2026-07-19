@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>ConfigForge Terminal Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+      
+      body {
+        margin: 0;
+        background: #0f172a;
+        color: #e2e8f0;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+      }
+      .terminal {
+        width: 800px;
+        background: #1e293b;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.06);
+        overflow: hidden;
+      }
+      .titlebar {
+        background: #334155;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid #475569;
+      }
+      .dot { width: 10px; height: 10px; border-radius: 50%; }
+      .dot.r { background: #ef4444; }
+      .dot.y { background: #eab308; }
+      .dot.g { background: #22c55e; }
+      .title-text {
+        color: #94a3b8;
+        font-size: 12px;
+        margin-left: auto;
+      }
+      .body {
+        padding: 24px 28px;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .prompt { color: #22c55e; }
+      .prompt-dir { color: #38bdf8; }
+      .prompt-sym { color: #94a3b8; }
+      .json-key { color: #f472b6; }
+      .json-str { color: #34d399; }
+      .json-bool { color: #fbbf24; }
+      .json-num { color: #fbbf24; }
+      .comment { color: #64748b; font-style: italic; }
+      .line { opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="terminal-demo"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="8"
+    >
+      <section id="terminal-scene" class="clip" data-start="0" data-duration="8" data-track-index="1">
+        <div class="terminal">
+          <div class="titlebar">
+            <div class="dot r"></div>
+            <div class="dot y"></div>
+            <div class="dot g"></div>
+            <span class="title-text">configforge — live demo</span>
+          </div>
+          <div class="body">
+            <div class="line" id="line1">
+              <span class="prompt">❯</span> <span class="prompt-dir">configforge/</span><span class="prompt-sym">$</span> python examples/live_config_example.py
+            </div>
+            <br class="line" id="line2">
+            <div class="line" id="line3">{</div>
+            <div class="line" id="line4">  <span class="json-key">"app"</span>: <span class="json-str">"pet-wall"</span>,</div>
+            <div class="line" id="line5">  <span class="json-key">"features"</span>: {</div>
+            <div class="line" id="line6">    <span class="json-key">"random_image"</span>: <span class="json-bool">true</span></div>
+            <div class="line" id="line7">  },</div>
+            <div class="line" id="line8">  <span class="json-key">"limits"</span>: {</div>
+            <div class="line" id="line9">    <span class="json-key">"max_requests"</span>: <span class="json-num">100</span></div>
+            <div class="line" id="line10">  },</div>
+            <div class="line" id="line11">  <span class="json-key">"runtime"</span>: {</div>
+            <div class="line" id="line12">    <span class="json-key">"image_url"</span>: <span class="json-str">"https://images.dog.ceo/breeds/poodle-medium/PXL_20210220_100624962.jpg"</span>,</div>
+            <div class="line" id="line13">    <span class="json-key">"status"</span>: <span class="json-str">"success"</span></div>
+            <div class="line" id="line14">  }</div>
+            <div class="line" id="line15">}</div>
+            <br class="line" id="line16">
+            <div class="line" id="line17"><span class="comment"># OK: resolved config merges static + live free-API data and passes schema.</span></div>
+            <div class="line" id="line18"><span class="prompt">❯</span> <span class="prompt-dir">configforge/</span><span class="prompt-sym">$</span></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      
+      // Terminal fade in
+      tl.from(".terminal", { scale: 0.95, opacity: 0, duration: 0.5, ease: "power3.out" }, 0);
+      
+      // Command line
+      tl.to("#line1", { opacity: 1, duration: 0.3 }, 0.5);
+      
+      // JSON output - staggered reveal
+      tl.to("#line3", { opacity: 1, duration: 0.2 }, 1.0);
+      tl.to("#line4", { opacity: 1, duration: 0.2 }, 1.2);
+      tl.to("#line5", { opacity: 1, duration: 0.2 }, 1.4);
+      tl.to("#line6", { opacity: 1, duration: 0.2 }, 1.6);
+      tl.to("#line7", { opacity: 1, duration: 0.2 }, 1.8);
+      tl.to("#line8", { opacity: 1, duration: 0.2 }, 2.0);
+      tl.to("#line9", { opacity: 1, duration: 0.2 }, 2.2);
+      tl.to("#line10", { opacity: 1, duration: 0.2 }, 2.4);
+      tl.to("#line11", { opacity: 1, duration: 0.2 }, 2.6);
+      tl.to("#line12", { opacity: 1, duration: 0.2 }, 2.8);
+      tl.to("#line13", { opacity: 1, duration: 0.2 }, 3.0);
+      tl.to("#line14", { opacity: 1, duration: 0.2 }, 3.2);
+      tl.to("#line15", { opacity: 1, duration: 0.2 }, 3.4);
+      
+      // Comment and final prompt
+      tl.to("#line17", { opacity: 1, duration: 0.3 }, 4.0);
+      tl.to("#line18", { opacity: 1, duration: 0.3 }, 4.5);
+      
+      // Hold for viewing
+      tl.to({}, { duration: 3 }, 5);
+      
+      window.__timelines["terminal-demo"] = tl;
+    </script>
+  </body>
+</html>

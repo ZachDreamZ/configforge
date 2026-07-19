@@ -62,6 +62,12 @@ print(config["server"]["port"])  # 9090 (later layer wins, nested merge)
 
 No dependencies. One import. Two layers merged.
 
+### Live Demo
+
+<p align="center">
+  <img src="hyperframes/terminal-preview.png" alt="ConfigForge terminal demo" width="800" />
+</p>
+
 ---
 
 ## Why ConfigForge?
@@ -109,13 +115,9 @@ pip install -e ".[dev,secrets]"    # + test deps
 
 ## Architecture
 
-```
-Layer (dict source)  ─┐
-Layer (json file)    ─┤
-env (APP__*)         ─┼─►  forge()  ─►  deep merge  ─►  validate(schema)  ─►  Config
-secrets (Fernet)     ─┘                    │
-                                           └─► MergeConflictError on scalar clash
-```
+<p align="center">
+  <img src="assets/architecture.svg" alt="ConfigForge Architecture" width="800" />
+</p>
 
 The merge is pure and deterministic; validation mutates nothing but fills in
 declared defaults. Secrets are decrypted to a plain dict before merge, so they
