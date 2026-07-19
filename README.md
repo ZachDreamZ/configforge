@@ -116,7 +116,7 @@ pip install -e ".[dev,secrets]"    # + test deps
 ## Architecture
 
 <p align="center">
-  <img src="assets/architecture.svg" alt="ConfigForge Architecture" width="800" />
+  <img src="assets/architecture.png" alt="ConfigForge Architecture" width="800" />
 </p>
 
 The merge is pure and deterministic; validation mutates nothing but fills in
