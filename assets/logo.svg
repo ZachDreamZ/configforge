@@ -8,14 +8,38 @@
       <stop offset="0%" stop-color="#38bdf8"/>
       <stop offset="100%" stop-color="#6366f1"/>
     </linearGradient>
+    <linearGradient id="flame" x1="0.5" y1="1" x2="0.5" y2="0">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
   </defs>
   <rect width="320" height="320" rx="64" fill="url(#bg)"/>
-  <!-- layered plates -->
-  <rect x="64" y="120" width="192" height="22" rx="11" fill="url(#accent)" opacity="0.45"/>
-  <rect x="80" y="156" width="160" height="22" rx="11" fill="url(#accent)" opacity="0.65"/>
-  <rect x="96" y="192" width="128" height="22" rx="11" fill="url(#accent)"/>
-  <!-- anvil / lock core -->
-  <circle cx="160" cy="96" r="34" fill="none" stroke="url(#accent)" stroke-width="8"/>
-  <path d="M146 96 h28 M160 82 v28" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
-  <text x="160" y="288" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#e2e8f0">ConfigForge</text>
+
+  <!-- Forge flame -->
+  <path d="M160 52 Q180 90 172 108 Q168 116 160 112 Q152 116 148 108 Q140 90 160 52Z" fill="url(#flame)"/>
+  <path d="M160 68 Q168 90 164 100 Q162 104 160 102 Q158 104 156 100 Q152 90 160 68Z" fill="#e2e8f0" opacity="0.6"/>
+
+  <!-- Config layers with code brackets -->
+  <g transform="translate(0, 24)">
+    <!-- Top layer -->
+    <path d="M92 148 L92 140 Q92 134 98 134 L222 134 Q228 134 228 140 L228 148" fill="none" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+    <rect x="106" y="137" width="108" height="6" rx="3" fill="url(#accent)" opacity="0.45"/>
+
+    <!-- Middle layer -->
+    <path d="M76 170 L76 162 Q76 156 82 156 L238 156 Q244 156 244 162 L244 170" fill="none" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+    <rect x="90" y="159" width="140" height="6" rx="3" fill="url(#accent)" opacity="0.65"/>
+
+    <!-- Bottom layer -->
+    <path d="M60 192 L60 184 Q60 178 66 178 L254 178 Q260 178 260 184 L260 192" fill="none" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+    <rect x="74" y="181" width="172" height="6" rx="3" fill="url(#accent)"/>
+  </g>
+
+  <!-- Key hole overlay -->
+  <g transform="translate(160, 122)">
+    <circle r="10" fill="none" stroke="#fbbf24" stroke-width="2.5" opacity="0.8"/>
+    <rect x="-2.5" y="6" width="5" height="10" rx="2.5" fill="#fbbf24" opacity="0.8"/>
+  </g>
+
+  <text x="160" y="290" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="800" fill="#e2e8f0" letter-spacing="1.5">ConfigForge</text>
 </svg>
