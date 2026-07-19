@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><title>ConfigForge terminal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0f172a;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'JetBrains Mono',monospace}
+  .term{width:820px;background:#1e293b;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);overflow:hidden}
+  .tb{background:#334155;padding:12px 16px;display:flex;gap:8px;align-items:center;border-bottom:1px solid #475569}
+  .d{width:10px;height:10px;border-radius:50%}.dr{background:#ef4444}.dy{background:#eab308}.dg{background:#22c55e}
+  .tt{color:#94a3b8;font-size:12px;margin-left:auto}
+  .bd{padding:24px 28px;font-size:14px;line-height:1.8;color:#e2e8f0}
+  .p{color:#22c55e}.pd{color:#38bdf8}.ps{color:#94a3b8}.c{color:#64748b;font-style:italic}
+  .k{color:#f472b6}.s{color:#34d399}.b{color:#fbbf24}.n{color:#fbbf24}
+  .h{background:#2d3748;border-radius:4px;padding:2px 8px;display:inline-block}
+  .bar{height:2px;background:#22c55e;width:8px;display:inline-block;animation:none;margin-left:2px}
+</style></head><body>
+<div class="term">
+  <div class="tb">
+    <div class="d dr"></div><div class="d dy"></div><div class="d dg"></div>
+    <span class="tt">configforge — live demo</span>
+  </div>
+  <div class="bd">
+    <div><span class="p">❯</span> <span class="pd">configforge/</span><span class="ps">$</span> python examples/live_config_example.py</div>
+    <br>
+    <div><span class="c">⠋ Fetching https://dog.ceo/api/breeds/image/random ...</span></div>
+    <div><span class="c">✔ Live API responded in 0.34s</span></div>
+    <br>
+    <div>{</div>
+    <div>  <span class="k">"app"</span>: <span class="s">"pet-wall"</span>,</div>
+    <div>  <span class="k">"features"</span>: {</div>
+    <div>    <span class="k">"random_image"</span>: <span class="b">true</span></div>
+    <div>  },</div>
+    <div>  <span class="k">"limits"</span>: {</div>
+    <div>    <span class="k">"max_requests"</span>: <span class="n">100</span></div>
+    <div>  },</div>
+    <div>  <span class="k">"runtime"</span>: {</div>
+    <div>    <span class="k">"image_url"</span>: <span class="s">"https://images.dog.ceo/breeds/poodle-medium/PXL_20210220_100624962.jpg"</span>,</div>
+    <div>    <span class="k">"status"</span>: <span class="s">"success"</span></div>
+    <div>  }</div>
+    <div>}</div>
+    <br>
+    <div><span class="c"># OK: resolved config merges static + live API data, passes schema</span></div>
+    <div><span class="p">❯</span> <span class="pd">configforge/</span><span class="ps">$</span><span class="bar"></span></div>
+  </div>
+</div>
+</body></html>

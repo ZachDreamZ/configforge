@@ -1,148 +1,95 @@
 # ConfigForge
 
 <p align="center">
-  <img src="assets/logo.svg" alt="ConfigForge logo" width="160" height="160" />
+  <img src="assets/logo.svg" alt="ConfigForge logo" width="140" height="140" />
 </p>
 
 <p align="center">
-  <strong>Layered, schema-aware configuration with encrypted secrets for 12-factor apps.</strong>
+  <strong>Layered application configuration with schema validation and encrypted secrets.</strong><br>
+  Merge, validate, secure — zero core dependencies.
 </p>
 
 <p align="center">
   <a href="https://github.com/ZachDreamZ/configforge/actions/workflows/ci.yml"><img src="https://github.com/ZachDreamZ/configforge/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI"></a>
   <a href="https://github.com/ZachDreamZ/configforge/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
-  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg" alt="Python 3.9+"></a>
-  <a href="https://github.com/ZachDreamZ/configforge/releases"><img src="https://img.shields.io/badge/releases-v0.1.0-ff69b4.svg" alt="Releases"></a>
-  <img src="https://img.shields.io/badge/coverage-22%20tests%20passing-brightgreen.svg" alt="Tests passing">
-  <img src="https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg" alt="Platforms">
+  <img src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg" alt="Python 3.9+">
+  <img src="https://img.shields.io/badge/tests-22%20passing-brightgreen.svg" alt="22 tests passing">
+  <img src="https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg" alt="Windows | Linux | macOS">
 </p>
 
-ConfigForge merges configuration from **multiple layered sources** — default
-files, environment-specific overlays, environment variables, and encrypted
-secrets — into a single resolved config, **validates** it against a schema, and
-exposes it as a clean Python object or JSON.
-
-Dependency-free for the core path (merge + validate + env). The optional
-encrypted-secrets feature uses [`cryptography`](https://pypi.org/project/cryptography)
-under a Fernet envelope.
-
 ---
 
-## Table of Contents
-
-- [Quick start](#quick-start)
-- [Why ConfigForge?](#why-configforge)
-- [Features](#features)
-- [Install](#install)
-- [Architecture](#architecture)
-- [CLI reference](#cli-reference)
-- [Python API](#python-api)
-- [Schema reference](#schema-reference)
-- [Examples](#examples)
-  - [Static config merge](#static-config-merge)
-  - [Live free-API integration](#live-free-api-integration)
-  - [Encrypted secrets demo](#encrypted-secrets-demo)
-- [Development](#development)
-- [Roadmap](#roadmap)
-- [License](#license)
-
----
-
-## Quick start
+**ConfigForge** merges config from multiple sources — JSON files, environment variables, default values, and encrypted secrets — into a single validated dictionary. Nested dicts merge deeply. Scalar conflicts raise hard errors by default instead of silently clobbering. Schemas enforce types, required fields, and bounds at resolve time.
 
 ```python
 from configforge import forge, Layer
 
-base = Layer.from_dict({"app": "demo", "server": {"host": "0.0.0.0", "port": 8080}})
-override = Layer.from_dict({"server": {"port": 9090}})
-
-config = forge(base, override)
-print(config["server"]["port"])  # 9090 (later layer wins, nested merge)
+config = forge(
+    Layer.from_dict({"app": "my-app", "server": {"port": 8080}}),
+    Layer.from_dict({"server": {"host": "0.0.0.0"}}),
+)
+config["server"]["port"]  # 8080 — nested merge preserves siblings
 ```
 
-No dependencies. One import. Two layers merged.
+---
 
-### Live Demo
+## What it does
+
+- **Layered merge** — combine any number of sources; later layers win on nested dicts
+- **Conflict safety** — a scalar set to different values by two layers raises `MergeConflictError`
+- **Schema validation** — `type`, `required`, `default`, `min`/`max`, `pattern`, `additional: false`
+- **Environment variable folding** — `APP__DB__HOST` auto-expands to `{"DB": {"HOST": ...}}`
+- **Encrypted secrets** — Fernet-encrypted tokens decrypted and merged like any other layer
+- **Pure Python** — zero dependencies for core path, `cryptography` optional for secrets
+
+## Preview
 
 <p align="center">
-  <img src="hyperframes/terminal-preview.png" alt="ConfigForge terminal demo" width="800" />
+  <img src="hyperframes/terminal-preview.png" alt="ConfigForge live terminal demo" width="820" />
 </p>
 
----
-
-## Why ConfigForge?
-
-Most config libraries either (a) just read one file, or (b) silently let later
-values clobber earlier ones. ConfigForge does three things most don't, in one
-small package:
-
-- **Strict conflict detection** — a scalar set differently by two layers is a
-  hard error by default, so "who wins?" bugs surface at startup, not in prod.
-- **Schema validation at resolve time** — types, required fields, ranges, and
-  patterns are checked when config is built, with helpful messages.
-- **Encrypted secrets as a first-class layer** — decrypt a Fernet token and
-  merge it like any other layer, no separate codepath.
-
----
-
-## Features
-
-- **Layered merge** — any number of `Layer` sources; later wins on nested dicts.
-- **Conflict safety** — scalar collisions raise `MergeConflictError` (disable
-  with `--no-fail-on-conflict` for intentional overrides).
-- **Schema validation** — `type`, `required`, `default`, `min`/`max`,
-  `pattern`, and `additional: false` (reject unknown keys).
-- **Env folding** — `APP__DB__HOST` becomes `{"DB": {"HOST": ...}}`.
-- **Encrypted secrets** — Fernet envelope via the `secrets` extra; decrypt and
-  merge like any other layer.
-- **Zero core dependencies**, Python 3.9+, works on Windows / Linux / macOS.
-- **Fully tested** — 22 unit + integration tests, CI on 3 OS × 4 Python versions.
+Live API config resolution: a static base config merges with a random-dog-image response from the free [dog.ceo](https://dog.ceo) API at runtime. Full runnable example at [`examples/live_config_example.py`](examples/live_config_example.py).
 
 ---
 
 ## Install
 
-> ConfigForge is not yet on PyPI. Install from source (works today):
-
 ```bash
-git clone https://github.com/ZachDreamZ/configforge.git
-cd configforge
-pip install -e ".[secrets]"        # core (zero deps)
-pip install -e ".[dev,secrets]"    # + test deps
+pip install -e ".[secrets]"     # core + encrypted secrets support
+pip install -e ".[dev,secrets]" # + test/development dependencies
 ```
+
+ConfigForge is not yet on PyPI. Install from source (works today).
 
 ---
 
 ## Architecture
 
 <p align="center">
-  <img src="assets/architecture.png" alt="ConfigForge Architecture" width="800" />
+  <img src="assets/architecture.png" alt="ConfigForge architecture diagram" width="800" />
 </p>
 
-The merge is pure and deterministic; validation mutates nothing but fills in
-declared defaults. Secrets are decrypted to a plain dict before merge, so they
-are indistinguishable from any other layer.
+Sources feed into `forge()` which performs a deep merge, validates the result against an optional schema, and returns a `Config` object. Scalar conflicts short-circuit with `MergeConflictError` before validation runs.
 
 ---
 
-## CLI reference
+## CLI
 
 ```bash
-# Merge two JSON layers, fold in APP__* env vars, validate against a schema
 configforge \
   -l base.json -l override.json \
   --env-prefix APP__ \
   --schema schema.json
 
-# Decrypt a Fernet secrets token and merge it in
+# Encrypted secrets
 export CONFIGFORGE_KEY="<32-byte base64 key>"
 configforge -l base.json --secrets secrets.token
 
-# Generate a fresh key
+# Generate a Fernet key
 configforge --generate-key
 ```
 
-A conflicting scalar (`{"port":1}` vs `{"port":2}`) exits non-zero:
+A conflicting scalar exits non-zero with a clear message:
 
 ```
 configforge: error: conflicting value for 'port': 1 vs 2
@@ -153,30 +100,37 @@ configforge: error: conflicting value for 'port': 1 vs 2
 ## Python API
 
 ```python
-from configforge import forge, Layer, load_schema, decrypt_secrets
+from configforge import forge, Layer, load_schema, decrypt_secrets, generate_key
 
-layers = [Layer.from_json_file("base.json"), Layer.from_json_file("override.json")]
+# Build layers
+layers = [
+    Layer.from_json_file("defaults.json"),
+    Layer.from_json_file("production.json"),
+]
 schema = load_schema("schema.json")
-secrets = decrypt_secrets("secrets.token", key=KEY)
 
+# Decrypt secrets (requires CONFIGFORGE_KEY or explicit key)
+secrets = decrypt_secrets("secrets.token")
+
+# Merge and validate
 config = forge(*layers, schema=schema, secrets=secrets, env_prefix="APP__")
 
-config.get("server.port")        # via the underlying dict
+# Use it
 config["server"]["host"]
+config.get("server.port")
 "debug" in config
-config.to_json()                  # pretty JSON string
+config.to_json()  # pretty-printed JSON string
 ```
 
----
-
-## Schema reference
+### Schema format
 
 ```json
 {
   "fields": {
     "port":  { "type": "int",  "required": true, "min": 1, "max": 65535 },
     "host":  { "type": "str",  "default": "localhost", "pattern": "^[a-z0-9.-]+$" },
-    "debug": { "type": "bool" }
+    "debug": { "type": "bool" },
+    "allowed_origins": { "type": "list" }
   },
   "additional": false
 }
@@ -186,7 +140,7 @@ config.to_json()                  # pretty JSON string
 | ------------ | -------------------------------------------------------- |
 | `type`       | `str` `int` `float` `bool` `list` `dict` `any`           |
 | `required`   | error if missing and no `default`                        |
-| `default`    | value used when the field is absent                      |
+| `default`    | value used when field is absent                          |
 | `min`/`max`  | numeric bounds (int/float)                               |
 | `pattern`    | regex the string must match                              |
 | `additional` | `false` rejects keys not declared in `fields`            |
@@ -195,18 +149,16 @@ config.to_json()                  # pretty JSON string
 
 ## Examples
 
-### Static config merge
+### Static merge
 
 ```python
 from configforge import forge, Layer
 
 base = Layer.from_dict({
     "app": "demo",
-    "server": {"host": "0.0.0.0", "port": 8080, "workers": 4}
+    "server": {"host": "0.0.0.0", "port": 8080, "workers": 4},
 })
-override = Layer.from_dict({
-    "server": {"port": 9090, "workers": 8}
-})
+override = Layer.from_dict({"server": {"port": 9090, "workers": 8}})
 
 config = forge(base, override)
 print(config.to_json())
@@ -220,12 +172,9 @@ print(config.to_json())
 # }
 ```
 
-### Live free-API integration
+### Live API integration
 
-ConfigForge can resolve config that includes data fetched from a live API at
-runtime. Here, a static base config merges with a random dog image URL from
-[dog.ceo](https://dog.ceo) — a free, no-auth public API (one of 22 audited and
-confirmed live):
+ConfigForge can incorporate live API responses into a resolved config at runtime:
 
 ```python
 import json, urllib.request
@@ -234,31 +183,33 @@ from configforge import forge, Layer
 base = Layer.from_dict({
     "app": "pet-wall",
     "features": {"random_image": True},
-    "limits": {"max_requests": 100}
+    "limits": {"max_requests": 100},
 })
 
-resp = urllib.request.urlopen(
-    urllib.request.Request(
-        "https://dog.ceo/api/breeds/image/random",
-        headers={"User-Agent": "configforge-example/1.0"}
-    )
-)
-live = json.loads(resp.read().decode("utf-8"))
+resp = urllib.request.urlopen(urllib.request.Request(
+    "https://dog.ceo/api/breeds/image/random",
+    headers={"User-Agent": "configforge-example/1.0"},
+))
+live = json.loads(resp.read())
 live_layer = Layer.from_dict(
     {"runtime": {"image_url": live["message"], "status": live["status"]}},
-    name="live:dog.ceo"
+    name="live:dog.ceo",
 )
 
-schema = {"fields": {"app": {"type": "str", "required": True},
-                     "features": {"type": "dict"},
-                     "limits": {"type": "dict"},
-                     "runtime": {"type": "dict", "required": True}}}
+schema = {
+    "fields": {
+        "app": {"type": "str", "required": True},
+        "features": {"type": "dict"},
+        "limits": {"type": "dict"},
+        "runtime": {"type": "dict", "required": True},
+    }
+}
 
 config = forge(base, live_layer, schema=schema)
 print(config.to_json())
 ```
 
-Output (actual, from a live run):
+Output:
 
 ```json
 {
@@ -272,26 +223,21 @@ Output (actual, from a live run):
 }
 ```
 
-See the full runnable example at
-[`examples/live_config_example.py`](examples/live_config_example.py).
+See [`examples/live_config_example.py`](examples/live_config_example.py) for the full runnable script.
 
-### Encrypted secrets demo
+### Encrypted secrets
 
 ```python
 from configforge import forge, Layer, decrypt_secrets, generate_key
 
-key = generate_key()  # or set CONFIGFORGE_KEY in env
+key = generate_key()  # or set CONFIGFORGE_KEY env var
 
-base = Layer.from_dict({"app": "demo", "host": "localhost"})
-secrets = decrypt_secrets("secrets.token", key=key)
-
-config = forge(base, secrets)
+config = forge(
+    Layer.from_dict({"app": "demo", "host": "localhost"}),
+    decrypt_secrets("secrets.token", key=key),
+)
 print(config["db_password"])  # decrypted and merged
 ```
-
-For a complete end-to-end fixture that exercises merge, validate, env vars,
-secrets round-trip, conflict detection, and key generation, see
-[`examples/make_demo.py`](examples/make_demo.py).
 
 ---
 
@@ -299,19 +245,20 @@ secrets round-trip, conflict detection, and key generation, see
 
 ```bash
 pip install -e ".[dev,secrets]"
-pytest
+pytest          # runs all 22 tests
+pytest -v       # verbose
 ```
 
 ---
 
 ## Roadmap
 
-- YAML / TOML layer loaders (via optional extras).
-- Remote layers (HTTP/S3) behind a pluggable `LayerSource` protocol.
-- `configforge diff` to visualize what each layer contributed.
+- YAML/TOML layer loaders (optional extras)
+- Remote layers (HTTP, S3) behind a pluggable `LayerSource` protocol
+- `configforge diff` — visualize each layer's contribution
 
 ---
 
 ## License
 
-[MIT](LICENSE) © ZachDreamZ
+[MIT](LICENSE) &copy; ZachDreamZ
