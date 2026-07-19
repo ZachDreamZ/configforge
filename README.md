@@ -109,9 +109,13 @@ pip install -e ".[dev,secrets]"    # + test deps
 
 ## Architecture
 
-<p align="center">
-  <img src="assets/architecture.svg" alt="ConfigForge architecture diagram" width="720" />
-</p>
+```
+Layer (dict source)  ─┐
+Layer (json file)    ─┤
+env (APP__*)         ─┼─►  forge()  ─►  deep merge  ─►  validate(schema)  ─►  Config
+secrets (Fernet)     ─┘                    │
+                                           └─► MergeConflictError on scalar clash
+```
 
 The merge is pure and deterministic; validation mutates nothing but fills in
 declared defaults. Secrets are decrypted to a plain dict before merge, so they
@@ -253,10 +257,6 @@ print(config.to_json())
 ```
 
 Output (actual, from a live run):
-
-<p align="center">
-  <img src="assets/terminal_demo.png" alt="ConfigForge terminal demo output" width="560" />
-</p>
 
 ```json
 {
