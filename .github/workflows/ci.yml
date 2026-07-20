@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   test:
@@ -43,3 +43,9 @@ jobs:
         with:
           name: dist
           path: dist/*
+
+  ci-pass:
+    runs-on: ubuntu-latest
+    needs: [test, build]
+    steps:
+      - run: echo "All matrix jobs passed"
